@@ -21,7 +21,7 @@ class XiciSpider(Spider):
             ip=one_selector.xpath("td[2]/text()").extract()[0]
             port=one_selector.xpath("td[3]/text()").extract()[0]
             http=one_selector.xpath("td[6]/text()").extract()[0]
-            url="{};//{}:{}".format(http,ip,port)
+            url="{}://{}:{}".format(http,ip,port)
             item["url"]=url
             yield Request(self.test_url,
                           callback=self.test_parse,

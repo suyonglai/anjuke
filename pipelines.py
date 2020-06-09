@@ -36,7 +36,7 @@ class XiciProxyPipeline(object):
             self.db_conn=redis.StrictRedis(host=host,
                                            port=port,
                                            decode_responses=True)
-            self.db_conn.delete("ip")
+            #self.db_conn.delete("ip")
     def process_item(self,item,spider):
         if spider.name=="xici":
             item_dict=dict(item)

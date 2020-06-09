@@ -5,6 +5,8 @@ from scrapy import Request
 from ..items import AnjukeItem
 import time
 import re
+import myxici
+import random
 
 
 # curtpage = 2
@@ -12,6 +14,11 @@ import re
     name = 'anjukeSpider'
     allowed_domains = ['anjuke.com']
     start_urls = ['https://heb.anjuke.com/sale/shuangchengs/']'''
+#读取带读取的url列表，urls.txt 由另一个文件爬取生成
+with open('urls.txt') as f:
+    ulr_list = f.readlines()
+f.close()
+
 
 class syl_spider(RedisSpider):
     name='syl_spider'
@@ -32,14 +39,16 @@ class syl_spider(RedisSpider):
             yield item
         except:
             print('found a error!!!')
-        with open('urls.txt') as f:
-            ulr_list = f.readlines()
-
-
-        f.close()
         for url in ulr_list:
-            yield scrapy.Request(url[:-1])
-            time.sleep(4)
+            try:
+                proxy=random.choice(myxici.get_myurl())
+                yield scrapy.Request(url[:-1],callback=self.parse,errback=self.error_back,meta={"proxy":proxy,"download_timeout":20})
+            except:
+                print('可能是超时了')
+    def error_back(self,failure):
+            pass
+            #print('这个IP不可用，看看下一个吧')
+
 
 
 '''def parse(self, response):

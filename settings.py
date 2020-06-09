@@ -55,6 +55,7 @@ COOKIES_ENABLED = False
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'anjuke.middlewares.AnjukeDownloaderMiddleware': 543,
+    'anjuke.middlewares.fuxianhuUserAgentMiddleware':544
 }
 
 # Enable or disable extensions

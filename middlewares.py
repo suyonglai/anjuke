@@ -7,6 +7,8 @@
 
 from scrapy import signals
 from twisted.internet.error import TimeoutError
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+from fake_useragent import UserAgent
 
 class AnjukeSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -104,3 +106,9 @@ class AnjukeDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+class fuxianhuUserAgentMiddleware(UserAgentMiddleware):
+    def process_request(self, request, spider):
+        ua=UserAgent()
+        request.headers['User-Agent']=ua.random
+        print(request.headers['User-Agent'])
