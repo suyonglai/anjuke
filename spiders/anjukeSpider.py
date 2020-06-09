@@ -18,7 +18,7 @@ import random
 with open('urls.txt') as f:
     ulr_list = f.readlines()
 f.close()
-
+cookie='Paat_2132_saltkey=z5CaGvzA; Paat_2132_lastvisit=1591439478; Paat_2132_forum_lastvisit=D_62_1591443107; Paat_2132_visitedfid=62; Paat_2132_viewid=tid_133040; Paat_2132_sid=m09uNc; Paat_2132_st_p=0%7C1591714042%7C033b90838e2f03ee8ff460154c824cfe; Paat_2132_sendmail=1; Paat_2132_lastact=1591714042%09plugin.php%09'
 
 class syl_spider(RedisSpider):
     name='syl_spider'
@@ -41,12 +41,14 @@ class syl_spider(RedisSpider):
             print('found a error!!!')
         for url in ulr_list:
             try:
-                proxy=random.choice(myxici.get_myurl())
-                yield scrapy.Request(url[:-1],callback=self.parse,errback=self.error_back,meta={"proxy":proxy,"download_timeout":20})
+                yield scrapy.Request(url[:-1],cookies=cookie,dont_filter=True)
+                time.sleep(random.randint(30,70))
+                # proxy=random.choice(myxici.get_myurl())
+                # yield scrapy.Request(url[:-1],callback=self.parse,errback=self.error_back,meta={"proxy":proxy,"download_timeout":20})
             except:
                 print('可能是超时了')
-    def error_back(self,failure):
-            pass
+    #def error_back(self,failure):
+            #pass
             #print('这个IP不可用，看看下一个吧')
 
 
